@@ -225,6 +225,18 @@
     opacity: 1;
   }
 
+  /* FAQ rows are native <details>/<summary>: open/close, keyboard support and
+     screen-reader semantics come from the browser, so the accordion needs no
+     JavaScript and works before hydration. Only the default marker is removed. */
+  .faq-summary {
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .faq-summary::-webkit-details-marker {
+    display: none;
+  }
+
   /* The journey road: a dashed hairline standing in for lane markings. A
      metaphor, not asphalt — no texture, no perspective, no scenery. */
   .journey-road {
