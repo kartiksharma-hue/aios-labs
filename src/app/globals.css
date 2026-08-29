@@ -1,0 +1,251 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   AIOS LABS — DESIGN SYSTEM
+   Single source of truth for colour, type, space, motion and radii.
+   Consume these through Tailwind utilities (bg-base, text-ink, text-display…)
+   rather than hard-coding values in components.
+   ========================================================================== */
+
+@theme {
+  /* --- Surfaces ---------------------------------------------------------- */
+  --color-void: #050507;
+  --color-base: #0a0a0c;
+  --color-surface: #101014;
+  --color-elevated: #17171c;
+  --color-paper: #f4f3ef;
+
+  /* --- Foreground -------------------------------------------------------- */
+  --color-ink: #f5f4f0;
+  --color-ink-muted: #a3a3a0;
+  --color-ink-faint: #71716f;
+  --color-ink-inverse: #0a0a0c;
+
+  /* --- Hairlines --------------------------------------------------------- */
+  --color-line: color-mix(in srgb, #f5f4f0 9%, transparent);
+  --color-line-strong: color-mix(in srgb, #f5f4f0 18%, transparent);
+
+  /* --- Brand ------------------------------------------------------------- */
+  /* Signal Amber — the taxi, the CTA, the single point of colour on a page. */
+  --color-signal: #f4c542;
+  --color-signal-deep: #c79a22;
+  --color-signal-soft: color-mix(in srgb, #f4c542 12%, transparent);
+  /* Circuit Blue — technical/data contexts only. Never a CTA. */
+  --color-circuit: #6e8bff;
+
+  /* --- Type families ----------------------------------------------------- */
+  --font-sans: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+
+  /* --- Type scale (fluid) ------------------------------------------------ */
+  --text-display-xl: clamp(3.25rem, 10.5vw, 9rem);
+  --text-display-xl--line-height: 0.9;
+  --text-display-xl--letter-spacing: -0.045em;
+  --text-display-xl--font-weight: 500;
+
+  --text-display: clamp(2.75rem, 7.5vw, 6rem);
+  --text-display--line-height: 0.95;
+  --text-display--letter-spacing: -0.04em;
+  --text-display--font-weight: 500;
+
+  --text-h1: clamp(2.25rem, 5vw, 4rem);
+  --text-h1--line-height: 1;
+  --text-h1--letter-spacing: -0.035em;
+  --text-h1--font-weight: 500;
+
+  --text-h2: clamp(1.875rem, 3.6vw, 3rem);
+  --text-h2--line-height: 1.06;
+  --text-h2--letter-spacing: -0.03em;
+  --text-h2--font-weight: 500;
+
+  --text-h3: clamp(1.375rem, 2.2vw, 1.875rem);
+  --text-h3--line-height: 1.18;
+  --text-h3--letter-spacing: -0.02em;
+  --text-h3--font-weight: 500;
+
+  --text-lead: clamp(1.0625rem, 1.4vw, 1.375rem);
+  --text-lead--line-height: 1.55;
+  --text-lead--letter-spacing: -0.011em;
+
+  --text-body: 1rem;
+  --text-body--line-height: 1.65;
+
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.6;
+
+  /* Mono eyebrows / indices / metadata. Always uppercase. */
+  --text-label: 0.6875rem;
+  --text-label--line-height: 1.2;
+  --text-label--letter-spacing: 0.18em;
+
+  /* --- Rhythm ------------------------------------------------------------ */
+  --spacing-gutter: clamp(1.25rem, 4vw, 3rem);
+  --spacing-section: clamp(5rem, 10vw, 10rem);
+  --spacing-section-sm: clamp(3.5rem, 6vw, 6rem);
+
+  /* --- Measure ----------------------------------------------------------- */
+  --container-page: 1600px;
+  --container-content: 1280px;
+  --container-narrow: 900px;
+  --container-prose: 68ch;
+
+  /* --- Radii (restrained — this is an editorial brand, not a SaaS app) --- */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+
+  /* --- Motion ------------------------------------------------------------ */
+  --ease-signature: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --duration-instant: 120ms;
+  --duration-quick: 240ms;
+  --duration-base: 420ms;
+  --duration-slow: 720ms;
+  --duration-cinematic: 1200ms;
+}
+
+/* Tailwind v4 has no `--duration-*` utility namespace, so the named durations
+   above are exposed as utilities explicitly. Without these, `duration-quick`
+   would silently generate nothing. */
+@utility duration-instant {
+  transition-duration: var(--duration-instant);
+}
+@utility duration-quick {
+  transition-duration: var(--duration-quick);
+}
+@utility duration-base {
+  transition-duration: var(--duration-base);
+}
+@utility duration-slow {
+  transition-duration: var(--duration-slow);
+}
+@utility duration-cinematic {
+  transition-duration: var(--duration-cinematic);
+}
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-base);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    text-rendering: optimizeLegibility;
+    /* GSAP pins and horizontal journeys must never leak a sideways scrollbar. */
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background-color: var(--color-signal);
+    color: var(--color-ink-inverse);
+  }
+
+  /* One visible, consistent focus ring across the whole site. */
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+    border-radius: var(--radius-xs);
+  }
+
+  /* Headings inherit weight/tracking from the utility applied to them. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+/* ==========================================================================
+   PRIMITIVES
+   ========================================================================== */
+
+@layer components {
+  /* Inverted editorial section: flip the semantic tokens, everything follows. */
+  .surface-light {
+    --color-base: #f4f3ef;
+    --color-surface: #eae8e2;
+    --color-elevated: #ffffff;
+    --color-ink: #0a0a0c;
+    --color-ink-muted: #55555a;
+    --color-ink-faint: #85858a;
+    --color-ink-inverse: #f5f4f0;
+    --color-line: color-mix(in srgb, #0a0a0c 12%, transparent);
+    --color-line-strong: color-mix(in srgb, #0a0a0c 24%, transparent);
+    background-color: var(--color-base);
+    color: var(--color-ink);
+  }
+
+  /* Mono uppercase metadata label. */
+  .label {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    line-height: var(--text-label--line-height);
+    letter-spacing: var(--text-label--letter-spacing);
+    text-transform: uppercase;
+  }
+
+  /* A single hairline that reads at every viewport width. */
+  .hairline {
+    border-color: var(--color-line);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   REVEAL PRIMING
+   Elements marked [data-reveal] start hidden ONLY when JavaScript is present
+   and motion is allowed. Without JS — or with reduced motion — content renders
+   visible and nothing is ever trapped behind an animation that never runs.
+   -------------------------------------------------------------------------- */
+
+.js [data-reveal],
+.js [data-reveal-children] > * {
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js [data-reveal],
+  .js [data-reveal-children] > * {
+    opacity: 1;
+    will-change: auto;
+  }
+}
+
+/* ==========================================================================
+   MOTION SAFETY
+   Everything animated must survive this. GSAP timelines additionally check
+   the media query in JS (see src/lib/motion.ts).
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
