@@ -82,7 +82,7 @@ function Swatch({
 
 export default function StyleGuidePage() {
   return (
-    <main id="main">
+    <main id="main" className="flex-1 pt-header md:pt-header-lg">
       {/* ---------------------------------------------------------------- */}
       <Section space="sm">
         <Container className="flex flex-col gap-6">

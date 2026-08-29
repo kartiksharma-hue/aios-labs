@@ -157,8 +157,87 @@ have settled.
 
 ---
 
+## Navigation
+
+### Header
+Fixed and transparent over the page, committing to a blurred surface plus a
+hairline once the page scrolls past 12px — so a full-bleed hero reads edge to
+edge, and text never crosses a transparent bar unreadably.
+
+Because the header overlays the page, any view without a full-bleed hero clears
+it with `pt-header md:pt-header-lg` (64px / 80px).
+
+Nav state is the **underline, not the colour**: a Signal Amber rule wipes in
+from the left on hover and stays put on the active route. Active detection
+matches nested routes, so `/services/seo` keeps *Services* lit.
+
+The CTA is a hairline button with an amber dot rather than a filled pill — a
+solid amber block in the header is the exact generic-SaaS note the brand avoids,
+and it would compete with the one filled CTA a page is allowed.
+
+### Mobile panel
+Full-screen `bg-void` overlay with mono-numbered links at `text-h2`.
+
+- Open state is **derived from the route** (`openForPath === pathname`), so
+  navigation and browser back/forward close it with no effect chasing changes.
+- `inert` when closed — links are never reachable by tab from behind the overlay.
+- Focus moves to the first link on open and returns to the toggle on close.
+- Tab cycles within the panel; Escape closes.
+- The page behind is scroll-locked, and the panel closes if the viewport grows
+  into the desktop nav so the lock can never be stranded.
+- It closes 1.6× faster than it opens — a menu should get out of the way.
+
+Two stacking rules matter and are easy to get wrong:
+1. The panel sits **inside** the header's `z-50` context, so it already covers
+   the page without a high z-index of its own.
+2. The wordmark and close button are raised **above** the panel. Without that
+   the close control is buried, and a touch device — with no Escape key — has
+   no way out of the menu.
+
+Under reduced motion **no timeline is built at all**. A `.from()` tween leaves
+its targets at `opacity: 0` until something plays it, so a timeline that is only
+ever scrubbed to `progress(1)` opens an empty menu. The reduced path sets end
+states directly with `gsap.set()`.
+
+### Footer
+Editorial block: large wordmark and tagline against Navigation / Services /
+Locations columns, over a legal bar. Service and location slugs are fixed now so
+internal linking and the sitemap stay consistent as those routes land.
+
+Social links and contact details render **only if present** in `site.contact`,
+which is empty — none have been provided.
+
+---
+
+## The taxi (Phase 4/5) — architecture decision
+
+The taxi will be **inline SVG driven by GSAP**, not Lottie or video.
+
+Consequences to build against:
+- Every animatable part is its own addressable SVG node — body, wheels,
+  windows, headlights, driver, driver's head — each with a stable `id` so a
+  timeline can target parts independently (wheels spinning while the body
+  settles on its suspension; the driver turning to camera while the taxi holds).
+- Parts are grouped by transform origin, since GSAP animates group transforms.
+- The art ships as a React component returning SVG, not an `<img>` — an
+  external file cannot be reached into.
+- Colour comes from `currentColor` and the design tokens, so the taxi inherits
+  Signal Amber rather than hard-coding a hex.
+- No runtime dependency is added, it scales without raster artefacts, and the
+  reduced-motion fallback is a static pose of the same markup.
+
+The component is **not built yet** — it belongs to Phase 4.
+---
+
 ## Verified
 
-Typecheck, lint and production build pass clean. `/style-guide` audited in
-Chromium at 1440, 1280, 768, 430 and 375px: no horizontal overflow, no content
-left hidden after scroll, and reveals persist across resize and scroll-back.
+Typecheck, lint and production build pass clean.
+
+Audited in Chromium at 1440, 1280, 1024, 768, 430, 390 and 375px: no horizontal
+overflow at any width, no content left hidden after scroll, and reveals persist
+across resize and scroll-back.
+
+Navigation verified: tab order runs skip-link → wordmark → nav → CTA with a
+visible ring on every stop; the mobile panel traps focus, restores it to the
+toggle, closes on Escape and on tap, unlocks the body, and opens instantly with
+all links visible under `prefers-reduced-motion: reduce`.

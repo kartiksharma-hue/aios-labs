@@ -83,6 +83,10 @@
   --spacing-gutter: clamp(1.25rem, 4vw, 3rem);
   --spacing-section: clamp(5rem, 10vw, 10rem);
   --spacing-section-sm: clamp(3.5rem, 6vw, 6rem);
+  /* The header overlays the page, so any view without a full-bleed hero
+     clears it with `pt-header`. */
+  --spacing-header: 4rem;
+  --spacing-header-lg: 5rem;
 
   /* --- Measure ----------------------------------------------------------- */
   --container-page: 1600px;

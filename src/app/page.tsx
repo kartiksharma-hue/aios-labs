@@ -18,7 +18,7 @@ export const metadata: Metadata = {
  */
 export default function HomePage() {
   return (
-    <main id="main" className="flex flex-1 flex-col justify-center">
+    <main id="main" className="flex flex-1 flex-col justify-center pt-header md:pt-header-lg">
       <Section>
         <Container width="narrow" className="flex flex-col gap-8">
           <Eyebrow index="00">Foundation</Eyebrow>
