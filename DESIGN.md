@@ -209,24 +209,38 @@ which is empty — none have been provided.
 
 ---
 
-## The taxi (Phase 4/5) — architecture decision
+## The taxi intro
 
-The taxi will be **inline SVG driven by GSAP**, not Lottie or video.
+Inline SVG driven by GSAP — no Lottie, video, canvas or extra dependency. The
+art is a React component (`components/intro/taxi.tsx`) returning flat SVG
+shapes, so a timeline can reach individual parts; an `<img>` could not be.
 
-Consequences to build against:
-- Every animatable part is its own addressable SVG node — body, wheels,
-  windows, headlights, driver, driver's head — each with a stable `id` so a
-  timeline can target parts independently (wheels spinning while the body
-  settles on its suspension; the driver turning to camera while the taxi holds).
-- Parts are grouped by transform origin, since GSAP animates group transforms.
-- The art ships as a React component returning SVG, not an `<img>` — an
-  external file cannot be reached into.
-- Colour comes from `currentColor` and the design tokens, so the taxi inherits
-  Signal Amber rather than hard-coding a hex.
-- No runtime dependency is added, it scales without raster artefacts, and the
-  reduced-motion fallback is a static pose of the same markup.
+Parts are grouped by the transform origin their motion needs: `taxi-wheel-front`
+and `taxi-wheel-back` spin about their own centres, `taxi-chassis` dips and rocks
+over them, `taxi-driver-head` pivots at the neck, `taxi-driver-arm` at the
+shoulder. Colour comes from the tokens, so the car is Signal Amber by
+inheritance rather than by hex.
 
-The component is **not built yet** — it belongs to Phase 4.
+The car is grounded by a **hairline road** the overlay draws behind it — the
+same structural device as the rest of the site. There is no cast shadow: on a
+near-black ground any tinted ellipse reads as a puddle rather than as weight.
+
+### Handoff
+The overlay is **server-rendered on every visit**, so the first paint is
+already the dark screen the sequence opens on. CSS keeps it hidden unless the
+pre-paint script flags the session (`:root[data-intro="play"]`), which means no
+overlay on a repeat visit and none at all when JavaScript never runs.
+
+`inert` is applied imperatively, never in JSX — `inert` in the server HTML
+would leave the page uninteractive for anyone without JavaScript.
+
+When the sequence ends, `IntroStage` **remounts the hero** and the overlay
+fades. The remount is the handoff: the hero plays its entrance once, as the
+overlay clears, instead of invisibly behind it.
+
+### Reduced motion
+No timeline is built. The scene is hidden and the wordmark set to its end state
+immediately — the destination without the journey. Skip still works.
 ---
 
 ## Verified

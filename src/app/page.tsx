@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Hero } from "@/components/home/hero";
+import { IntroStage } from "@/components/intro/intro-stage";
 import { Positioning } from "@/components/home/positioning";
 import { ServicesIntro } from "@/components/home/services-intro";
 import { GrowthSystem } from "@/components/home/growth-system";
@@ -16,21 +16,22 @@ export const metadata: Metadata = {
 };
 
 /**
- * Phase 4 will mount the TaxiIntro ahead of <Hero /> and hand over by passing
- * `startDelay`. Until then the hero plays its own entrance on mount, which is
- * also the behaviour whenever the intro is skipped.
+ * IntroStage renders the taxi intro and the hero together, because the intro
+ * hands the screen over to the hero's entrance. Everything below the fold is
+ * unaffected and stays here.
  */
 export default function HomePage() {
   return (
     <main id="main" className="flex-1">
-      <Hero />
-      <Positioning />
-      <ServicesIntro />
-      <GrowthSystem />
-      <SelectedWork />
-      <FounderPreview />
-      <TeamPreview />
-      <FinalCta />
+      <IntroStage>
+        <Positioning />
+        <ServicesIntro />
+        <GrowthSystem />
+        <SelectedWork />
+        <FounderPreview />
+        <TeamPreview />
+        <FinalCta />
+      </IntroStage>
     </main>
   );
 }

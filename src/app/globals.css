@@ -211,6 +211,20 @@
     border-color: var(--color-line);
   }
 
+  /* The intro overlay ships in the server HTML, so the very first paint is
+     already the dark screen the sequence opens on. It stays hidden unless the
+     pre-paint script flags the session — which means no overlay on a repeat
+     visit, and none at all when JavaScript never runs. */
+  .intro-overlay {
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  :root[data-intro="play"] .intro-overlay {
+    visibility: visible;
+    opacity: 1;
+  }
+
   /* Marks a reserved slot as deliberately empty rather than broken. Used by
      <PlaceholderFrame> wherever real imagery has not been supplied. */
   .placeholder-hatch {

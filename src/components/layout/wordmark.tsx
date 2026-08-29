@@ -2,8 +2,8 @@ import Link from "next/link";
 import { cn } from "@/lib/cn";
 
 type WordmarkProps = {
-  /** `lg` is the footer treatment. */
-  size?: "sm" | "lg";
+  /** `lg` is the footer treatment, `xl` the intro reveal. */
+  size?: "sm" | "lg" | "xl";
   /** Renders plain text instead of a link. */
   asLink?: boolean;
   className?: string;
@@ -12,6 +12,7 @@ type WordmarkProps = {
 const sizes = {
   sm: "text-body",
   lg: "text-h2",
+  xl: "text-display-xl",
 } as const;
 
 /**

@@ -40,13 +40,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" className={`${fontVariables} h-full antialiased`}>
       <head>
         {/*
-          Marks the document as JS-capable before first paint so reveal
-          animations can prime their hidden state without hiding content
-          from users whose JavaScript never arrives.
+          Runs before first paint. Marks the document as JS-capable so reveal
+          animations can prime their hidden state without hiding content from
+          users whose JavaScript never arrives, and flags whether the home
+          page intro is still owed to this session — see src/lib/intro.ts.
         */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `document.documentElement.classList.add('js')`,
+            __html:
+              `document.documentElement.classList.add('js');` +
+              `try{if(sessionStorage.getItem('aios:intro-played')!=='1')` +
+              `document.documentElement.dataset.intro='play'}catch(e){}`,
           }}
         />
       </head>
