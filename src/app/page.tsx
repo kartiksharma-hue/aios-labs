@@ -1,41 +1,36 @@
 import type { Metadata } from "next";
-import { Container } from "@/components/ui/container";
-import { Section } from "@/components/ui/section";
-import { Eyebrow } from "@/components/ui/eyebrow";
-import { Accent } from "@/components/ui/accent";
-import { Button } from "@/components/ui/button";
+import { Hero } from "@/components/home/hero";
+import { Positioning } from "@/components/home/positioning";
+import { ServicesIntro } from "@/components/home/services-intro";
+import { GrowthSystem } from "@/components/home/growth-system";
+import { SelectedWork } from "@/components/home/selected-work";
+import { FounderPreview } from "@/components/home/founder-preview";
+import { TeamPreview } from "@/components/home/team-preview";
+import { FinalCta } from "@/components/home/final-cta";
 import { site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: `${site.name} — ${site.tagline}`,
   description: site.description,
+  alternates: { canonical: "/" },
 };
 
 /**
- * PLACEHOLDER — holding page only.
- * The real homepage (hero, growth system, case studies, process, founder,
- * team, testimonials, FAQ) is Phase 3; the cinematic taxi intro is Phase 4.
+ * Phase 4 will mount the TaxiIntro ahead of <Hero /> and hand over by passing
+ * `startDelay`. Until then the hero plays its own entrance on mount, which is
+ * also the behaviour whenever the intro is skipped.
  */
 export default function HomePage() {
   return (
-    <main id="main" className="flex flex-1 flex-col justify-center pt-header md:pt-header-lg">
-      <Section>
-        <Container width="narrow" className="flex flex-col gap-8">
-          <Eyebrow index="00">Foundation</Eyebrow>
-          <h1 className="text-display">
-            We engineer <Accent>digital growth</Accent>.
-          </h1>
-          <p className="text-lead text-ink-muted max-w-prose">
-            Design system established. Navigation, homepage and the growth
-            journey are queued behind it.
-          </p>
-          <div className="flex flex-wrap gap-3">
-            <Button href="/style-guide" withArrow>
-              View the design system
-            </Button>
-          </div>
-        </Container>
-      </Section>
+    <main id="main" className="flex-1">
+      <Hero />
+      <Positioning />
+      <ServicesIntro />
+      <GrowthSystem />
+      <SelectedWork />
+      <FounderPreview />
+      <TeamPreview />
+      <FinalCta />
     </main>
   );
 }

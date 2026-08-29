@@ -52,6 +52,7 @@ export const serviceNav: readonly NavItem[] = [
     label: "Conversion Optimization",
     href: "/services/conversion-optimization",
   },
+  { label: "Marketing Automation", href: "/services/marketing-automation" },
 ];
 
 /** Footer location links. Routes land in Phase 9. */

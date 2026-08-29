@@ -9,6 +9,8 @@ type SectionProps = {
   space?: "default" | "sm" | "none";
   as?: ElementType;
   id?: string;
+  /** Points at the section's own heading, so landmarks are named. */
+  "aria-labelledby"?: string;
   className?: string;
 };
 
@@ -25,11 +27,13 @@ export function Section({
   space = "default",
   as: Tag = "section",
   id,
+  "aria-labelledby": ariaLabelledBy,
   className,
 }: SectionProps) {
   return (
     <Tag
       id={id}
+      aria-labelledby={ariaLabelledBy}
       className={cn(
         "relative",
         spacing[space],

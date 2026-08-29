@@ -13,6 +13,8 @@ type RevealProps = {
   delay?: number;
   /** Vertical travel in pixels. Keep small — this is a settle, not a slide. */
   distance?: number;
+  /** Play on mount rather than on scroll. For above-the-fold entrances. */
+  immediate?: boolean;
   as?: ElementType;
   className?: string;
 };
@@ -28,6 +30,7 @@ export function Reveal({
   stagger = false,
   delay = 0,
   distance = 24,
+  immediate = false,
   as: Tag = "div",
   className,
 }: RevealProps) {
@@ -57,11 +60,15 @@ export function Reveal({
           delay,
           stagger: stagger ? STAGGER.base : 0,
           clearProps: "willChange",
-          scrollTrigger: { trigger: root, start: "top 85%", once: true },
+          ...(immediate
+            ? {}
+            : {
+                scrollTrigger: { trigger: root, start: "top 85%", once: true },
+              }),
         },
       );
     },
-    { scope, dependencies: [stagger, delay, distance] },
+    { scope, dependencies: [stagger, delay, distance, immediate] },
   );
 
   const primingAttribute = stagger

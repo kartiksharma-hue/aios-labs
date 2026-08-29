@@ -17,6 +17,8 @@ type TextRevealProps = {
   /** Play immediately (hero) instead of waiting for scroll. */
   immediate?: boolean;
   as?: ElementType;
+  /** Needed when a section labels itself by its heading. */
+  id?: string;
   className?: string;
 };
 
@@ -31,6 +33,7 @@ export function TextReveal({
   delay = 0,
   immediate = false,
   as: Tag = "h2",
+  id,
   className,
 }: TextRevealProps) {
   const scope = useRef<HTMLElement>(null);
@@ -83,7 +86,7 @@ export function TextReveal({
   );
 
   return (
-    <Tag ref={scope} data-reveal className={cn(className)}>
+    <Tag ref={scope} id={id} data-reveal className={cn(className)}>
       {children}
     </Tag>
   );

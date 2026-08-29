@@ -210,6 +210,16 @@
   .hairline {
     border-color: var(--color-line);
   }
+
+  /* Marks a reserved slot as deliberately empty rather than broken. Used by
+     <PlaceholderFrame> wherever real imagery has not been supplied. */
+  .placeholder-hatch {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      var(--color-line) 0 1px,
+      transparent 1px 11px
+    );
+  }
 }
 
 /* --------------------------------------------------------------------------
