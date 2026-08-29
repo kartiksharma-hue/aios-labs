@@ -241,6 +241,38 @@ overlay clears, instead of invisibly behind it.
 ### Reduced motion
 No timeline is built. The scene is hidden and the wordmark set to its end state
 immediately — the destination without the journey. Skip still works.
+
+## The services journey
+
+The same taxi, a different job. `components/taxi/taxi.tsx` is shared and
+carries no animation of its own; each surface builds its own timeline against
+the ids.
+
+**One ScrollTrigger** drives the whole section — it scrubs the taxi down the
+road, turns the wheels, fills the road behind it, and reports which stop it has
+reached. Eight independent triggers would do the same work with eight times the
+bookkeeping and no shared notion of progress. The page is never pinned and
+never snapped: scrolling stays native and the journey only reads the position.
+
+Progress maps across the **full track height**, not between the first and last
+stop. Progress 0 is the track's top crossing the viewport centre and 1 is its
+bottom, so that mapping parks the taxi exactly on the centre line and a stop
+meets it precisely when centred. Interpolating between stop centres instead
+leaves the taxi drifting up to half a stop from the one it is marking.
+
+Stop centres are remeasured on every refresh, so uneven text wrapping and
+viewport changes stay correct without hard-coded spacing.
+
+The middle grid column is a **road corridor** wide enough for the taxi. An
+`auto` column collapses to nothing and the car sits on top of the active stop's
+copy.
+
+### Prominence without animation
+A stop's active state is `boolean | null`. `null` means no journey is driving
+the page — no JavaScript, reduced motion, or before the first scroll — and every
+stop then renders at full prominence. Quiet stops differ by **colour, never by
+opacity or visibility**, so no service is ever hidden or unreadable and the
+content never depends on an animation having run.
 ---
 
 ## Verified

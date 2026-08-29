@@ -6,63 +6,9 @@
  * see PLACEHOLDER entries below. Do not replace those with invented content.
  */
 
-export type Service = {
-  index: string;
-  name: string;
-  description: string;
-  href: string;
-};
-
-export const services: readonly Service[] = [
-  {
-    index: "01",
-    name: "SEO & Organic Growth",
-    description: "Visibility that keeps compounding after the spend stops.",
-    href: "/services/seo",
-  },
-  {
-    index: "02",
-    name: "Performance Marketing",
-    description: "Paid media run against contribution margin, not vanity ROAS.",
-    href: "/services/performance-marketing",
-  },
-  {
-    index: "03",
-    name: "Google Ads",
-    description: "Intent captured at the moment it appears.",
-    href: "/services/google-ads",
-  },
-  {
-    index: "04",
-    name: "Meta Ads",
-    description: "Creative and audience testing built as a repeatable system.",
-    href: "/services/meta-ads",
-  },
-  {
-    index: "05",
-    name: "Lead Generation",
-    description: "Qualified pipeline, not form fills.",
-    href: "/services/lead-generation",
-  },
-  {
-    index: "06",
-    name: "Social Media",
-    description: "Presence built to turn attention into demand.",
-    href: "/services/social-media",
-  },
-  {
-    index: "07",
-    name: "Conversion Optimization",
-    description: "The same traffic, asked to work harder.",
-    href: "/services/conversion-optimization",
-  },
-  {
-    index: "08",
-    name: "Marketing Automation",
-    description: "The follow-up that runs whether or not anyone remembers.",
-    href: "/services/marketing-automation",
-  },
-];
+// The service list is canonical in src/content/services.ts — the home page,
+// the services journey and the footer all read the same records.
+export { services, type Service } from "@/content/services";
 
 /** The five connected disciplines, set as a typographic equation. */
 export const growthPillars = [

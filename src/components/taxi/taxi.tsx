@@ -1,6 +1,10 @@
 /**
  * AIOS Labs taxi — original stylized side-profile illustration.
  *
+ * Shared by the home page intro and the services growth journey. It carries no
+ * animation of its own: each surface builds its own timeline against the ids
+ * below.
+ *
  * Every animatable part is its own addressable node with a stable id, grouped
  * by the transform origin its motion needs:
  *
@@ -12,7 +16,7 @@
  *     taxi-driver      torso + arm + head
  *       taxi-driver-arm   pivots at the shoulder
  *       taxi-driver-head  pivots at the neck
- *         taxi-driver-face  eyes, faded in when the driver turns to camera
+ *         taxi-driver-face  eyes, hidden until the driver turns to camera
  *     taxi-headlight
  *
  * The car is grounded by the road hairline the intro draws behind it, not by
@@ -93,7 +97,7 @@ export function Taxi({ className }: { className?: string }) {
           />
           <g id="taxi-driver-head">
             <circle cx="244" cy="76" r="11" className="fill-ink-muted" />
-            <g id="taxi-driver-face">
+            <g id="taxi-driver-face" opacity="0">
               <circle cx="240" cy="75" r="1.8" className="fill-void" />
               <circle cx="248" cy="75" r="1.8" className="fill-void" />
             </g>

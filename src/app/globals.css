@@ -225,6 +225,16 @@
     opacity: 1;
   }
 
+  /* The journey road: a dashed hairline standing in for lane markings. A
+     metaphor, not asphalt — no texture, no perspective, no scenery. */
+  .journey-road {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      var(--color-line) 0 14px,
+      transparent 14px 26px
+    );
+  }
+
   /* Marks a reserved slot as deliberately empty rather than broken. Used by
      <PlaceholderFrame> wherever real imagery has not been supplied. */
   .placeholder-hatch {

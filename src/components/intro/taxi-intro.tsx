@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef } from "react";
-import { Taxi } from "@/components/intro/taxi";
+import { Taxi } from "@/components/taxi/taxi";
 import { Wordmark } from "@/components/layout/wordmark";
 import { Button } from "@/components/ui/button";
 import { gsap, useGSAP } from "@/lib/gsap";
