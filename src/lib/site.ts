@@ -73,9 +73,19 @@ export const legalNav: readonly NavItem[] = [
  * provided. Do not populate with example values; an unfilled field is better
  * than a wrong one. The footer renders nothing for empty entries.
  */
-export const contact = {
+export type ContactChannels = {
+  email: string | null;
+  phone: string | null;
+  addresses: readonly string[];
+  social: readonly { label: string; href: string }[];
+};
+
+// Typed rather than inferred: `as const` narrowed these to the literal type
+// `null`, which meant a real email or phone could never be dropped in without
+// a build error. The values stay empty; the shape now accepts real ones.
+export const contact: ContactChannels = {
   email: null,
   phone: null,
   addresses: [],
-  social: [] as readonly { label: string; href: string }[],
-} as const;
+  social: [],
+};
