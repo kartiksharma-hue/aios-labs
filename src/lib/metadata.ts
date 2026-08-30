@@ -24,6 +24,12 @@ type SocialCardInput = {
   description: string;
   /** Root-relative path, e.g. "/about". Resolved against `metadataBase`. */
   url: string;
+  /**
+   * Overrides the site-wide card for a page that has its own image — a founder
+   * portrait, say. Falls back to the shared image when omitted or `null`, so a
+   * page whose asset has not arrived yet still gets a valid card.
+   */
+  image?: { url: string; alt: string } | null;
 };
 
 type ArticleInput = SocialCardInput & {
@@ -36,7 +42,10 @@ export function socialCard({
   title,
   description,
   url,
+  image,
 }: SocialCardInput): Pick<Metadata, "openGraph" | "twitter"> {
+  const images = [image ? { ...socialImage, ...image } : socialImage];
+
   return {
     openGraph: {
       type: "website",
@@ -45,13 +54,13 @@ export function socialCard({
       url,
       siteName: site.name,
       locale: site.locale,
-      images: [socialImage],
+      images,
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [socialImage],
+      images,
     },
   };
 }

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Container } from "@/components/ui/container";
 import { Section } from "@/components/ui/section";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Accent } from "@/components/ui/accent";
-import { Button } from "@/components/ui/button";
 import { ClosingCta } from "@/components/ui/closing-cta";
 import { MediaFrame } from "@/components/ui/media-frame";
 import { PlaceholderNote } from "@/components/ui/placeholder-note";
@@ -14,29 +14,57 @@ import { site } from "@/lib/site";
 import { isFounderIndexable, robotsFor } from "@/lib/indexing";
 import { socialCard } from "@/lib/metadata";
 
+const FOUNDER_URL = `${site.url}/founder`;
+
 export const metadata: Metadata = {
-  title: "Founder",
+  title: { absolute: "Kartik Sharma — Founder, AIOS Labs" },
   description:
-    "The founder of AIOS Labs — the thinking behind an agency built to run growth as one connected system. Profile in progress.",
+    "Kartik Sharma is the founder of AIOS Labs, a digital growth agency focused on strategy, acquisition, conversion and marketing systems.",
   alternates: { canonical: "/founder" },
-  // Nothing verified to index yet; the page is a structure awaiting content.
+  // Derived, not asserted: the page becomes indexable because the founder has
+  // a verified name. See src/lib/indexing.ts.
   robots: robotsFor(isFounderIndexable),
-  // `profile` would assert a person this page does not yet describe.
   ...socialCard({
-    title: `Founder — ${site.name}`,
-    description: "The thinking behind AIOS Labs, in the founder's own words.",
+    title: "Kartik Sharma — Founder, AIOS Labs",
+    description:
+      "Kartik Sharma is the founder of AIOS Labs, a digital growth agency focused on strategy, acquisition, conversion and marketing systems.",
     url: "/founder",
+    // Uses the portrait once it exists; falls back to the site card until then.
+    image:
+      founder.portrait.src && founder.portrait.alt
+        ? { url: founder.portrait.src, alt: founder.portrait.alt }
+        : null,
   }),
 };
 
 /**
- * No Person structured data is emitted. Describing a person in schema requires
- * a verified name and biography, and neither exists yet — see content/founder.ts.
+ * Person structured data, emitted only once the name is verified, and carrying
+ * only what has actually been provided: name, job title, the page's own URL and
+ * the two confirmed profiles. No education, employment history, awards,
+ * credentials, affiliations or image claim is asserted — none has been verified.
  */
+const personJsonLd = founder.name
+  ? {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      name: founder.name,
+      jobTitle: founder.role,
+      url: FOUNDER_URL,
+      sameAs: founder.social.map((link) => link.href),
+    }
+  : null;
+
 export default function FounderPage() {
   return (
     <main id="main" className="flex-1">
-      {/* 01 / 04 — Hero and portrait */}
+      {personJsonLd ? (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+      ) : null}
+
+      {/* 01 — Hero */}
       <section
         aria-labelledby="founder-heading"
         className="pt-header md:pt-header-lg"
@@ -72,31 +100,40 @@ export default function FounderPage() {
                 {founder.name ?? "Founder profile"}
               </TextReveal>
 
-              <Reveal immediate delay={0.4} className="flex flex-col items-start gap-6">
+              <Reveal
+                immediate
+                delay={0.4}
+                className="flex flex-col items-start gap-6"
+              >
                 <p className="text-lead text-ink-muted">{founder.role}</p>
+
+                {founder.headline ? (
+                  <p className="text-h3 text-ink max-w-[24ch]">
+                    {founder.headline}
+                  </p>
+                ) : null}
+
                 {founder.intro ? (
                   <p className="text-ink-muted max-w-prose">{founder.intro}</p>
-                ) : (
-                  <p className="text-ink-muted max-w-prose">
-                    This profile is reserved for the founder&rsquo;s name, role
-                    and own account of why AIOS Labs was built the way it is.
-                  </p>
-                )}
-                <PlaceholderNote>
-                  Founder profile / content pending
-                </PlaceholderNote>
+                ) : null}
 
                 {founder.social.length > 0 ? (
-                  <ul className="flex flex-wrap gap-x-6 gap-y-2">
+                  <ul className="flex flex-wrap gap-x-6 gap-y-2 pt-1">
                     {founder.social.map((link) => (
                       <li key={link.href}>
                         <a
                           href={link.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-small text-ink-muted hover:text-ink transition-colors duration-quick ease-signature"
+                          className="group text-small text-ink-muted hover:text-ink inline-flex items-center gap-2 py-1 transition-colors duration-quick ease-signature"
                         >
                           {link.label}
+                          <span
+                            aria-hidden
+                            className="text-ink-faint transition-transform duration-quick ease-signature group-hover:-translate-y-0.5 group-focus-visible:-translate-y-0.5"
+                          >
+                            ↗
+                          </span>
                         </a>
                       </li>
                     ))}
@@ -156,6 +193,13 @@ export default function FounderPage() {
               <TextReveal as="h2" id="philosophy-heading" className="text-h1">
                 What the founder holds to
               </TextReveal>
+              {founder.philosophyStatement ? (
+                <Reveal>
+                  <blockquote className="border-signal text-ink-muted max-w-prose border-l pl-5">
+                    {founder.philosophyStatement}
+                  </blockquote>
+                </Reveal>
+              ) : null}
             </div>
 
             <div className="lg:col-span-7 lg:col-start-6">
@@ -179,28 +223,114 @@ export default function FounderPage() {
                     </li>
                   ))}
                 </ol>
-              ) : (
-                <Reveal className="border-line flex flex-col items-start gap-5 border-t pt-8">
-                  <p className="text-ink-muted max-w-prose">
-                    Three to five principles will sit here, in the
-                    founder&rsquo;s own words. Until they are written, nothing
-                    stands in for them — a quote invented for a website is worth
-                    less than an empty section.
-                  </p>
-                  <PlaceholderNote>Principles pending</PlaceholderNote>
-                  <Button href="/about" variant="secondary" withArrow>
-                    How AIOS Labs thinks
-                  </Button>
-                </Reveal>
-              )}
+              ) : null}
             </div>
           </div>
         </Container>
       </Section>
 
+      {/* 04 — What I work on */}
+      {founder.focus.length > 0 ? (
+        <Section aria-labelledby="focus-heading">
+          <Container width="page">
+            <div className="grid gap-10 md:grid-cols-12 md:gap-14">
+              <div className="md:col-span-4">
+                <Reveal className="mb-6">
+                  <Eyebrow index="03">Focus</Eyebrow>
+                </Reveal>
+                <TextReveal as="h2" id="focus-heading" className="text-h1">
+                  What I work on
+                </TextReveal>
+              </div>
+
+              <div className="md:col-span-7 md:col-start-6">
+                <ul className="grid gap-x-10 sm:grid-cols-2">
+                  {founder.focus.map((area) => (
+                    <li key={area.label}>
+                      <Reveal>
+                        {area.href ? (
+                          <Link
+                            href={area.href}
+                            className="group border-line hover:border-line-strong flex items-center justify-between gap-4 border-t py-5 transition-colors duration-quick ease-signature"
+                          >
+                            <span className="text-h3 text-ink-muted group-hover:text-ink transition-colors duration-quick ease-signature">
+                              {area.label}
+                            </span>
+                            <span
+                              aria-hidden
+                              className="text-ink-faint group-hover:text-signal transition-all duration-quick ease-signature group-hover:translate-x-1 group-focus-visible:translate-x-1"
+                            >
+                              →
+                            </span>
+                          </Link>
+                        ) : (
+                          <p className="border-line flex items-center border-t py-5">
+                            <span className="text-h3 text-ink-muted">
+                              {area.label}
+                            </span>
+                          </p>
+                        )}
+                      </Reveal>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </Container>
+        </Section>
+      ) : null}
+
+      {/* 05 — Why AIOS Labs */}
+      {founder.whyAiosLabs ? (
+        <Section aria-labelledby="why-heading" space="sm">
+          <Container width="page">
+            <div className="grid gap-10 md:grid-cols-12 md:gap-14">
+              <div className="md:col-span-4">
+                <Reveal className="mb-6">
+                  <Eyebrow index="04">Why</Eyebrow>
+                </Reveal>
+                <TextReveal as="h2" id="why-heading" className="text-h1">
+                  Why AIOS Labs
+                </TextReveal>
+              </div>
+              <div className="md:col-span-7 md:col-start-6">
+                <Reveal>
+                  <p className="text-lead text-ink-muted max-w-prose">
+                    {founder.whyAiosLabs}
+                  </p>
+                </Reveal>
+              </div>
+            </div>
+          </Container>
+        </Section>
+      ) : null}
+
+      {/* 06 — Vision */}
+      {founder.vision ? (
+        <Section aria-labelledby="vision-heading" tone="light">
+          <Container width="page">
+            <div className="flex flex-col gap-8">
+              <Reveal>
+                <Eyebrow index="05">Vision</Eyebrow>
+              </Reveal>
+              <TextReveal
+                as="h2"
+                id="vision-heading"
+                className="text-h2 max-w-[26ch]"
+              >
+                Where this is going
+              </TextReveal>
+              <Reveal>
+                <p className="text-lead max-w-prose">{founder.vision}</p>
+              </Reveal>
+            </div>
+          </Container>
+        </Section>
+      ) : null}
+
       <ClosingCta
         headingId="founder-cta-heading"
-        index="03"
+        index="06"
         headline={
           <>
             Let&rsquo;s build what comes <Accent>next</Accent>.
