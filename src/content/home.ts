@@ -59,42 +59,6 @@ export const growthSteps: readonly GrowthStep[] = [
 ];
 
 /**
- * PLACEHOLDER — no case studies have been provided. These are layout slots,
- * not projects. Never fill them with invented clients, industries or results.
- */
-export type WorkSlot = {
-  index: string;
-  fields: readonly { label: string; value: string }[];
-};
-
-export const workSlots: readonly WorkSlot[] = [
-  {
-    index: "01",
-    fields: [
-      { label: "Client", value: "Awaiting approval" },
-      { label: "Industry", value: "To be confirmed" },
-      { label: "Result", value: "Pending sign-off" },
-    ],
-  },
-  {
-    index: "02",
-    fields: [
-      { label: "Client", value: "Awaiting approval" },
-      { label: "Industry", value: "To be confirmed" },
-      { label: "Result", value: "Pending sign-off" },
-    ],
-  },
-  {
-    index: "03",
-    fields: [
-      { label: "Client", value: "Awaiting approval" },
-      { label: "Industry", value: "To be confirmed" },
-      { label: "Result", value: "Pending sign-off" },
-    ],
-  },
-];
-
-/**
  * PLACEHOLDER — no team members have been provided. These are layout slots.
  * The count here is a grid decision, not a statement about headcount.
  */

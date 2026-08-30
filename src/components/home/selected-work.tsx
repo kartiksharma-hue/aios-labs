@@ -6,43 +6,28 @@ import { PlaceholderFrame } from "@/components/ui/placeholder-frame";
 import { PlaceholderNote } from "@/components/ui/placeholder-note";
 import { Reveal } from "@/components/motion/reveal";
 import { TextReveal } from "@/components/motion/text-reveal";
-import { workSlots, type WorkSlot } from "@/content/home";
+import { WorkCard } from "@/components/work/work-card";
+import { publishedCaseStudies } from "@/content/work";
+import { isCaseStudyIndexable } from "@/lib/indexing";
+import { services } from "@/content/services";
 
 /**
- * A case-study slot. The structure is final; the content is not. Every field
- * here waits on approved client material — never fill these with invented
- * names, industries or results.
+ * Section 05 — selected work.
+ *
+ * Features the case studies that are actually publishable, read from the same
+ * content model and rendered through the same card as /work — so the home page
+ * cannot show a different set of work, or a different treatment of it, than
+ * the section it links to. Reserved slots stay on /work; they are not featured
+ * here. With nothing publishable, the reserved state below returns.
  */
-function WorkCard({ slot, className }: { slot: WorkSlot; className?: string }) {
-  return (
-    <Reveal as="article" className={className}>
-      <PlaceholderFrame label="Case study visual — pending" ratio="4 / 3" />
+const featured = publishedCaseStudies.filter(isCaseStudyIndexable).slice(0, 3);
 
-      <div className="mt-7 flex flex-col gap-5">
-        <div className="flex items-center gap-4">
-          <span className="label text-signal">{slot.index}</span>
-          <span aria-hidden className="bg-line-strong h-px w-6" />
-          <span className="label text-ink-faint">Reserved</span>
-        </div>
-
-        <h3 className="text-h3 text-ink">Case study {slot.index}</h3>
-
-        <dl className="border-line flex flex-col gap-3 border-t pt-5">
-          {slot.fields.map((field) => (
-            <div key={field.label} className="flex items-baseline gap-4">
-              <dt className="label text-ink-faint w-24 shrink-0">
-                {field.label}
-              </dt>
-              <dd className="text-small text-ink-muted">{field.value}</dd>
-            </div>
-          ))}
-        </dl>
-      </div>
-    </Reveal>
-  );
+function servicesFor(slugs: readonly string[]) {
+  return slugs
+    .map((slug) => services.find((entry) => entry.href === `/services/${slug}`))
+    .filter((entry): entry is NonNullable<typeof entry> => Boolean(entry));
 }
 
-/** Section 05 — selected work. */
 export function SelectedWork() {
   return (
     <Section aria-labelledby="work-heading">
@@ -57,21 +42,50 @@ export function SelectedWork() {
             </TextReveal>
           </div>
           <Reveal className="md:col-span-4 md:col-start-9 md:self-end">
-            <PlaceholderNote>Case studies pending approval</PlaceholderNote>
+            <PlaceholderNote>
+              {featured.length > 0
+                ? "Results published once verified"
+                : "Case studies pending approval"}
+            </PlaceholderNote>
           </Reveal>
         </div>
 
-        <div className="grid gap-x-8 gap-y-16 md:grid-cols-2 lg:gap-x-16">
-          {workSlots.map((slot, index) => (
-            <WorkCard
-              key={slot.index}
-              slot={slot}
-              // Editorial stagger — the second column drops, so the grid never
-              // reads as a plain row of cards.
-              className={index % 2 === 1 ? "lg:mt-28" : undefined}
-            />
-          ))}
-        </div>
+        {featured.length > 0 ? (
+          <div className="grid gap-x-8 gap-y-16 md:grid-cols-2 lg:gap-x-16">
+            {featured.map((study, index) => (
+              <WorkCard
+                key={study.slug}
+                study={study}
+                services={servicesFor(study.services)}
+                // Editorial stagger — the second column drops, so the grid
+                // never reads as a plain row of cards.
+                className={index % 2 === 1 ? "lg:mt-28" : undefined}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="grid gap-x-8 gap-y-16 md:grid-cols-2 lg:gap-x-16">
+            {["01", "02"].map((index, position) => (
+              <Reveal
+                key={index}
+                as="article"
+                className={position % 2 === 1 ? "lg:mt-28" : undefined}
+              >
+                <PlaceholderFrame
+                  label="Case study visual — pending"
+                  ratio="4 / 3"
+                />
+                <div className="mt-7 flex flex-col gap-4">
+                  <span className="label text-signal">{index}</span>
+                  <h3 className="text-h3 text-ink">Case study {index}</h3>
+                  <p className="text-small text-ink-muted">
+                    Reserved until a case study is approved for publication.
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        )}
 
         <Reveal className="border-line border-t pt-10">
           <Button href="/work" variant="secondary" size="lg" withArrow>
