@@ -23,7 +23,7 @@ export async function generateMetadata({
   if (!study) return {};
 
   const url = `/work/${slug}`;
-  const title = `${study.title} — ${study.reference}`;
+  const title = `${study.title} — ${study.category}`;
 
   return {
     title,

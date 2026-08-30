@@ -27,9 +27,13 @@ export function robotsFor(indexable: boolean): Metadata["robots"] {
   return indexable ? INDEX_FOLLOW : NOINDEX_FOLLOW;
 }
 
-/** A case study is indexable once it is no longer a reserved slot. */
+/**
+ * A case study is indexable once it is no longer a reserved slot. A
+ * `methodology` study qualifies: its scope of work is verified even though its
+ * numbers are not, which is real content. Only `placeholder` stays out.
+ */
 export function isCaseStudyIndexable(study: CaseStudy): boolean {
-  return study.published && study.status === "published";
+  return study.published && study.status !== "placeholder";
 }
 
 /** An article is indexable once it is actually published. */

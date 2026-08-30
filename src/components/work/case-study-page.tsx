@@ -66,6 +66,11 @@ export function CaseStudyPage({
   next?: CaseStudy;
 }) {
   const isPlaceholder = study.status === "placeholder";
+  const statusLabel = {
+    placeholder: "Content pending",
+    methodology: "Published — results pending verification",
+    published: "Published",
+  }[study.status];
 
   return (
     <main id="main" className="flex-1">
@@ -122,7 +127,7 @@ export function CaseStudyPage({
                 <div className="flex flex-col gap-1">
                   <dt className="label text-ink-faint">Status</dt>
                   <dd className="text-small text-ink-muted">
-                    {isPlaceholder ? "Content pending" : "Published"}
+                    {statusLabel}
                   </dd>
                 </div>
               </dl>

@@ -11,7 +11,14 @@
  * case study becomes real by filling these in — never by adding a page.
  */
 
-export type CaseStudyStatus = "placeholder" | "published";
+/**
+ * - `placeholder` — not enough verified detail to publish. Renders a marked
+ *   reserved state and stays out of the index and the sitemap.
+ * - `methodology` — the scope of work is verified, the numbers are not. The
+ *   engagement is documented honestly; no results section is invented.
+ * - `published`  — scope and verified outcome reporting both exist.
+ */
+export type CaseStudyStatus = "placeholder" | "methodology" | "published";
 
 export type CaseStudyMetric = {
   label: string;
@@ -49,12 +56,12 @@ export type CaseVisual = {
 
 export type CaseStudy = {
   slug: string;
-  /** Neutral internal label, e.g. "Growth System". Never a client name. */
+  /** The case study's display name — the client, once they are named. */
   title: string;
   /** e.g. "Case Study 01". */
   reference: string;
   category: string;
-  /** Real client name once approved for publication. */
+  /** Client name. `null` while the engagement is unnamed. */
   client: string | null;
   year: string | null;
   summary: string;
