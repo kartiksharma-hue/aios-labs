@@ -4,6 +4,7 @@ import { ServicePage } from "@/components/services/service-page";
 import { getServicePage, servicePages } from "@/content/service-pages";
 import { services } from "@/content/services";
 import { site } from "@/lib/site";
+import { socialCard } from "@/lib/metadata";
 
 /** All eight pages are known at build time, so all eight are static. */
 export function generateStaticParams() {
@@ -27,18 +28,11 @@ export async function generateMetadata({
     title: content.metaTitle,
     description: content.metaDescription,
     alternates: { canonical: url },
-    openGraph: {
-      type: "website",
+    ...socialCard({
       title: `${content.metaTitle} — ${site.name}`,
       description: content.metaDescription,
       url,
-      siteName: site.name,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `${content.metaTitle} — ${site.name}`,
-      description: content.metaDescription,
-    },
+    }),
   };
 }
 

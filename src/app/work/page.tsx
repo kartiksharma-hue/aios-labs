@@ -8,6 +8,7 @@ import { publishedCaseStudies } from "@/content/work";
 import { services } from "@/content/services";
 import { site } from "@/lib/site";
 import { isWorkIndexIndexable, robotsFor } from "@/lib/indexing";
+import { socialCard } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Selected Work",
@@ -17,14 +18,12 @@ export const metadata: Metadata = {
   // A listing of nothing but reserved slots is a thin page. It becomes
   // indexable the moment one real case study is published.
   robots: robotsFor(isWorkIndexIndexable),
-  openGraph: {
-    type: "website",
+  ...socialCard({
     title: `Selected Work — ${site.name}`,
     description:
       "Growth systems, campaigns and digital experiences built around the problem the business actually had.",
     url: "/work",
-    siteName: site.name,
-  },
+  }),
 };
 
 function servicesFor(slugs: readonly string[]) {

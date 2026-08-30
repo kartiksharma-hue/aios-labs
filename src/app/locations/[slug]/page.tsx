@@ -9,6 +9,7 @@ import {
 import { services } from "@/content/services";
 import { site } from "@/lib/site";
 import { robotsFor } from "@/lib/indexing";
+import { socialCard } from "@/lib/metadata";
 
 export function generateStaticParams() {
   return publishedLocations.map((location) => ({ slug: location.slug }));
@@ -30,13 +31,11 @@ export async function generateMetadata({
     // Indexed only once the page carries researched, market-specific content.
     // Four pages differing by a city name would be a doorway-page network.
     robots: robotsFor(isIndexable(location)),
-    openGraph: {
-      type: "website",
+    ...socialCard({
       title: `${location.metaTitle} — ${site.name}`,
       description: location.metaDescription,
       url,
-      siteName: site.name,
-    },
+    }),
   };
 }
 

@@ -15,15 +15,19 @@ import { site } from "@/lib/site";
  * screen to the AIOS Labs wordmark.
  *
  * Beat sheet (seconds), matching the storyboard:
- *   0.15  taxi enters from the left, wheels turning
- *   1.70  eases to a stop, chassis dips and settles on its springs
- *   2.00  driver turns to camera
- *   2.45  "BEST MARKETING AGENCY JANA HAI?"
- *   3.35  "BAITHO. AIOS LABS CHALTE HAIN."
- *   3.55  driver faces forward again
- *   3.95  taxi accelerates right, fully clear by 5.20
- *   4.90  wordmark and tagline reveal
- *   5.90  hand off to the hero
+ *   0.10  taxi enters from the left, wheels turning
+ *   1.35  eases to a stop, chassis dips and settles on its springs
+ *   1.60  driver turns to camera
+ *   1.95  "BEST MARKETING AGENCY JANA HAI?"   — legible 2.15 to 2.95
+ *   3.15  "BAITHO. AIOS LABS CHALTE HAIN."    — legible 3.35 to 4.05
+ *   3.40  driver faces forward again
+ *   3.75  taxi accelerates right, fully clear by 4.90
+ *   4.60  wordmark and tagline reveal
+ *   5.50  hand off to the hero
+ *
+ * The drive-in and drive-out were shortened and the two dialogue holds
+ * lengthened: the whole film now clears in about six seconds while each line
+ * sits still for longer than it did before.
  */
 
 /** Seconds the overlay takes to clear. */
@@ -107,7 +111,7 @@ export function TaxiIntro({ onHandoff, onFinish }: TaxiIntroProps) {
         gsap.set(reveal, { opacity: 1, y: 0 });
         timeline.current = gsap
           .timeline({ onComplete: () => handOff(FADE_AFTER_SEQUENCE) })
-          .to({}, { duration: 1.1 });
+          .to({}, { duration: 0.8 });
         return;
       }
 
@@ -129,88 +133,90 @@ export function TaxiIntro({ onHandoff, onFinish }: TaxiIntroProps) {
       timeline.current = tl;
 
       // --- Drive in -------------------------------------------------------
-      tl.to(taxi, { x: 0, duration: 1.55, ease: "power2.out" }, 0.15)
-        .to(wheels, { rotation: 860, duration: 1.55, ease: "power2.out" }, 0.15)
+      tl.to(taxi, { x: 0, duration: 1.25, ease: "power2.out" }, 0.1)
+        .to(wheels, { rotation: 780, duration: 1.25, ease: "power2.out" }, 0.1)
 
         // Weight transfer as it stops: the nose dips, then the springs settle.
         .to(
           chassis,
           { rotation: 1.1, y: 2, duration: 0.16, ease: "power2.out" },
-          1.62,
+          1.28,
         )
         .to(
           chassis,
-          { rotation: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.45)" },
-          1.78,
+          { rotation: 0, y: 0, duration: 0.6, ease: "elastic.out(1, 0.45)" },
+          1.44,
         )
         // --- The look -----------------------------------------------------
         .to(
           head,
-          { rotation: -15, scaleX: 1.07, duration: 0.42, ease: "back.out(2.2)" },
-          2.0,
+          { rotation: -15, scaleX: 1.07, duration: 0.38, ease: "back.out(2.2)" },
+          1.6,
         )
-        .to(arm, { rotation: -14, duration: 0.38, ease: "power2.out" }, 2.06)
-        .to(face, { opacity: 1, duration: 0.22 }, 2.18)
+        .to(arm, { rotation: -14, duration: 0.34, ease: "power2.out" }, 1.66)
+        .to(face, { opacity: 1, duration: 0.2 }, 1.76)
 
         // --- Dialogue -----------------------------------------------------
+        // `expo.out` seats each line almost immediately, so the hold below is
+        // reading time, not travel time.
         .to(
           lines[0],
-          { yPercent: 0, opacity: 1, duration: 0.55, ease: "expo.out" },
-          2.45,
+          { yPercent: 0, opacity: 1, duration: 0.5, ease: "expo.out" },
+          1.95,
         )
         .to(
           lines[0],
-          { yPercent: -110, opacity: 0, duration: 0.38, ease: "power2.in" },
-          3.15,
+          { yPercent: -110, opacity: 0, duration: 0.32, ease: "power2.in" },
+          2.95,
         )
         .to(
           lines[1],
-          { yPercent: 0, opacity: 1, duration: 0.55, ease: "expo.out" },
-          3.35,
+          { yPercent: 0, opacity: 1, duration: 0.5, ease: "expo.out" },
+          3.15,
         )
 
         // Driver faces forward, then pulls away.
         .to(
           head,
-          { rotation: 0, scaleX: 1, duration: 0.4, ease: "power2.inOut" },
-          3.55,
+          { rotation: 0, scaleX: 1, duration: 0.36, ease: "power2.inOut" },
+          3.4,
         )
-        .to(face, { opacity: 0, duration: 0.2 }, 3.55)
-        .to(arm, { rotation: 0, duration: 0.4, ease: "power2.inOut" }, 3.55)
+        .to(face, { opacity: 0, duration: 0.2 }, 3.4)
+        .to(arm, { rotation: 0, duration: 0.36, ease: "power2.inOut" }, 3.4)
 
         // --- Drive out ----------------------------------------------------
-        .to(chassis, { rotation: -1, duration: 0.2, ease: "power2.out" }, 3.95)
-        .to(chassis, { rotation: 0, duration: 0.5, ease: "power2.out" }, 4.15)
-        .to(taxi, { x: () => travel(), duration: 1.25, ease: "power2.in" }, 3.95)
+        .to(chassis, { rotation: -1, duration: 0.2, ease: "power2.out" }, 3.75)
+        .to(chassis, { rotation: 0, duration: 0.45, ease: "power2.out" }, 3.92)
+        .to(taxi, { x: () => travel(), duration: 1.15, ease: "power2.in" }, 3.75)
         .to(
           wheels,
-          { rotation: "+=1000", duration: 1.25, ease: "power2.in" },
-          3.95,
+          { rotation: "+=920", duration: 1.15, ease: "power2.in" },
+          3.75,
         )
         .to(
           lines[1],
-          { yPercent: -110, opacity: 0, duration: 0.38, ease: "power2.in" },
-          4.3,
+          { yPercent: -110, opacity: 0, duration: 0.32, ease: "power2.in" },
+          4.05,
         )
 
         // --- Wordmark -----------------------------------------------------
         .to(
           select("[data-road]"),
-          { opacity: 0, duration: 0.5, ease: "power2.out" },
-          4.75,
+          { opacity: 0, duration: 0.45, ease: "power2.out" },
+          4.45,
         )
         .to(
           reveal,
           {
             opacity: 1,
             y: 0,
-            duration: 0.7,
-            stagger: 0.14,
+            duration: 0.62,
+            stagger: 0.13,
             ease: "expo.out",
           },
-          4.9,
+          4.6,
         )
-        .to({}, { duration: 0.3 });
+        .to({}, { duration: 0.15 });
     },
     { scope },
   );
@@ -256,7 +262,7 @@ export function TaxiIntro({ onHandoff, onFinish }: TaxiIntroProps) {
             aria-hidden
             className="bg-line absolute inset-x-0 top-[89%] block h-px"
           />
-          <div data-taxi className="mx-auto w-[min(80vw,660px)]">
+          <div data-taxi className="mx-auto w-[min(88vw,660px)]">
             <Taxi className="h-auto w-full" />
           </div>
         </div>

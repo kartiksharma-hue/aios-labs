@@ -16,20 +16,19 @@ import {
 import { founder } from "@/content/founder";
 import { reservedPortrait } from "@/content/team";
 import { site } from "@/lib/site";
+import { socialCard } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "About",
   description:
     "AIOS Labs runs strategy, acquisition, conversion and technology as one connected growth system rather than as separate channels. How we think, and why the company exists.",
   alternates: { canonical: "/about" },
-  openGraph: {
-    type: "website",
+  ...socialCard({
     title: `About — ${site.name}`,
     description:
       "Why AIOS Labs exists, how we think, and what we connect into one growth system.",
     url: "/about",
-    siteName: site.name,
-  },
+  }),
 };
 
 export default function AboutPage() {

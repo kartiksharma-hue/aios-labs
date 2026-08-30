@@ -14,6 +14,7 @@ import { founder } from "@/content/founder";
 import { members, reservedPortrait, reservedSeats } from "@/content/team";
 import { site } from "@/lib/site";
 import { isTeamIndexable, robotsFor } from "@/lib/indexing";
+import { socialCard } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Team",
@@ -22,13 +23,11 @@ export const metadata: Metadata = {
   alternates: { canonical: "/team" },
   // Nothing verified to index yet; the directory is empty by design.
   robots: robotsFor(isTeamIndexable),
-  openGraph: {
-    type: "website",
+  ...socialCard({
     title: `Team — ${site.name}`,
     description: "The people behind AIOS Labs.",
     url: "/team",
-    siteName: site.name,
-  },
+  }),
 };
 
 /**

@@ -10,6 +10,7 @@ import { ArticleCard } from "@/components/blog/article-card";
 import { listedPosts, publishedPosts } from "@/content/blog";
 import { site } from "@/lib/site";
 import { isBlogIndexIndexable, robotsFor } from "@/lib/indexing";
+import { socialCard } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Journal",
@@ -19,14 +20,12 @@ export const metadata: Metadata = {
   // A journal listing only drafts is a thin page. It becomes indexable the
   // moment one article is published.
   robots: robotsFor(isBlogIndexIndexable),
-  openGraph: {
-    type: "website",
+  ...socialCard({
     title: `Journal — ${site.name}`,
     description:
       "Thinking about growth as a system — notes on acquisition, conversion, content, automation and measurement.",
     url: "/blog",
-    siteName: site.name,
-  },
+  }),
 };
 
 export default function BlogPage() {

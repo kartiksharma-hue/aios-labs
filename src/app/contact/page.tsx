@@ -10,6 +10,7 @@ import { TextReveal } from "@/components/motion/text-reveal";
 import { ContactForm } from "@/components/contact/contact-form";
 import { contactHero, fitSection, whatHappensNext } from "@/content/contact";
 import { contact, site } from "@/lib/site";
+import { socialCard } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: { absolute: "Contact AIOS Labs — Start a Growth Conversation" },
@@ -17,14 +18,12 @@ export const metadata: Metadata = {
     "Tell AIOS Labs where growth is getting stuck and start a conversation about strategy, acquisition, conversion, content, automation and measurement.",
   alternates: { canonical: "/contact" },
   robots: { index: true, follow: true },
-  openGraph: {
-    type: "website",
+  ...socialCard({
     title: `Contact — ${site.name}`,
     description:
       "Tell us where growth is getting stuck. We'll start with the problem, not a package.",
     url: "/contact",
-    siteName: site.name,
-  },
+  }),
 };
 
 /**
@@ -169,7 +168,7 @@ export default function ContactPage() {
                   </p>
                   <Link
                     href="/locations"
-                    className="group text-small text-ink hover:text-signal inline-flex items-center gap-2 transition-colors duration-quick ease-signature"
+                    className="group text-small text-ink hover:text-signal inline-flex items-center gap-2 py-1 transition-colors duration-quick ease-signature"
                   >
                     Explore where AIOS Labs works
                     <span

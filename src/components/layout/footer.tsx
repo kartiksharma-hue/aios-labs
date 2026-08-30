@@ -80,15 +80,24 @@ export function Footer() {
           <p className="text-small text-ink-faint">
             © {year} {site.name}. All rights reserved.
           </p>
-          <ul className="flex flex-wrap gap-x-6 gap-y-2">
+          <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
             {legalNav.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="text-small text-ink-faint hover:text-ink transition-colors duration-quick ease-signature"
-                >
-                  {item.label}
-                </Link>
+              <li key={item.label}>
+                {item.href ? (
+                  <Link
+                    href={item.href}
+                    className="text-small text-ink-faint hover:text-ink transition-colors duration-quick ease-signature"
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <span className="text-small text-ink-faint inline-flex items-center gap-2">
+                    {item.label}
+                    <span className="label text-ink-faint/70 border-line rounded-xs border px-1.5 py-0.5">
+                      Pending
+                    </span>
+                  </span>
+                )}
               </li>
             ))}
           </ul>

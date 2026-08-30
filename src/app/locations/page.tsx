@@ -9,20 +9,19 @@ import { TextReveal } from "@/components/motion/text-reveal";
 import { LocationDirectory } from "@/components/locations/location-directory";
 import { publishedLocations } from "@/content/locations";
 import { site } from "@/lib/site";
+import { socialCard } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Locations",
   description:
     "AIOS Labs works with businesses across markets, connecting strategy, acquisition, conversion and technology into one growth system.",
   alternates: { canonical: "/locations" },
-  openGraph: {
-    type: "website",
+  ...socialCard({
     title: `Locations — ${site.name}`,
     description:
       "The markets AIOS Labs works across, and why the system adapts to the business rather than the postcode.",
     url: "/locations",
-    siteName: site.name,
-  },
+  }),
 };
 
 /** The chain a market connects to — geography joined to the growth system. */

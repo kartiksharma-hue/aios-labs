@@ -9,6 +9,7 @@ import {
 import { services } from "@/content/services";
 import { isCaseStudyIndexable, robotsFor } from "@/lib/indexing";
 import { site } from "@/lib/site";
+import { articleCard } from "@/lib/metadata";
 
 export function generateStaticParams() {
   return publishedCaseStudies.map((study) => ({ slug: study.slug }));
@@ -32,13 +33,11 @@ export async function generateMetadata({
     // they are kept out of the index until real content replaces them. The
     // same rule decides sitemap inclusion — see src/lib/indexing.ts.
     robots: robotsFor(isCaseStudyIndexable(study)),
-    openGraph: {
-      type: "article",
+    ...articleCard({
       title: `${title} — ${site.name}`,
       description: study.summary,
       url,
-      siteName: site.name,
-    },
+    }),
   };
 }
 

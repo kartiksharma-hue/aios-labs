@@ -63,9 +63,20 @@ export const locationNav: readonly NavItem[] = [
   { label: "Mumbai", href: "/locations/mumbai" },
 ];
 
-export const legalNav: readonly NavItem[] = [
-  { label: "Privacy Policy", href: "/privacy" },
-  { label: "Terms", href: "/terms" },
+/**
+ * Legal documents. `href: null` means the document has not been written yet:
+ * the footer then renders the label as a visible pending marker instead of a
+ * link, because linking to an unwritten page puts a 404 in the footer of every
+ * page on the site. Give an item a real href and it becomes a link again.
+ */
+export type LegalItem = {
+  label: string;
+  href: string | null;
+};
+
+export const legalNav: readonly LegalItem[] = [
+  { label: "Privacy Policy", href: null },
+  { label: "Terms", href: null },
 ];
 
 /**

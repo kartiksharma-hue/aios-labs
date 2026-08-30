@@ -12,6 +12,7 @@ import { TextReveal } from "@/components/motion/text-reveal";
 import { founder } from "@/content/founder";
 import { site } from "@/lib/site";
 import { isFounderIndexable, robotsFor } from "@/lib/indexing";
+import { socialCard } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Founder",
@@ -20,14 +21,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "/founder" },
   // Nothing verified to index yet; the page is a structure awaiting content.
   robots: robotsFor(isFounderIndexable),
-  openGraph: {
-    type: "profile",
+  // `profile` would assert a person this page does not yet describe.
+  ...socialCard({
     title: `Founder — ${site.name}`,
-    description:
-      "The thinking behind AIOS Labs, in the founder's own words.",
+    description: "The thinking behind AIOS Labs, in the founder's own words.",
     url: "/founder",
-    siteName: site.name,
-  },
+  }),
 };
 
 /**

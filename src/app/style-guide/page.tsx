@@ -8,11 +8,21 @@ import { Rule } from "@/components/ui/rule";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Reveal } from "@/components/motion/reveal";
 import { TextReveal } from "@/components/motion/text-reveal";
+import { socialCard } from "@/lib/metadata";
 
 export const metadata: Metadata = {
   title: "Design System",
   description: "Internal reference for AIOS Labs design tokens and primitives.",
+  alternates: { canonical: "/style-guide" },
   robots: { index: false, follow: false },
+  // Without its own card this internal page inherits the root's og:url and
+  // advertises itself as the homepage.
+  ...socialCard({
+    title: "Design System — AIOS Labs",
+    description:
+      "Internal reference for AIOS Labs design tokens and primitives.",
+    url: "/style-guide",
+  }),
 };
 
 const surfaces = [
