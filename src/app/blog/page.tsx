@@ -9,12 +9,16 @@ import { TextReveal } from "@/components/motion/text-reveal";
 import { ArticleCard } from "@/components/blog/article-card";
 import { listedPosts, publishedPosts } from "@/content/blog";
 import { site } from "@/lib/site";
+import { isBlogIndexIndexable, robotsFor } from "@/lib/indexing";
 
 export const metadata: Metadata = {
   title: "Journal",
   description:
     "Notes from AIOS Labs on acquisition, conversion, content, automation and the systems that connect them.",
   alternates: { canonical: "/blog" },
+  // A journal listing only drafts is a thin page. It becomes indexable the
+  // moment one article is published.
+  robots: robotsFor(isBlogIndexIndexable),
   openGraph: {
     type: "website",
     title: `Journal — ${site.name}`,

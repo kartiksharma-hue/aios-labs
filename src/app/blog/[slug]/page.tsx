@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ArticlePage } from "@/components/blog/article-page";
 import { getPost, getRelatedPosts, posts } from "@/content/blog";
 import { site } from "@/lib/site";
+import { isPostIndexable, robotsFor } from "@/lib/indexing";
 
 /** Drafts are routable so they can be reviewed; indexing is handled separately. */
 export function generateStaticParams() {
@@ -22,10 +23,9 @@ export async function generateMetadata({
     title: post.seoTitle,
     description: post.seoDescription,
     alternates: { canonical: url },
-    // A draft is never indexed, however it is reached.
-    robots: post.published
-      ? { index: true, follow: true }
-      : { index: false, follow: true },
+    // A draft is never indexed, however it is reached — and the same rule
+    // keeps it out of the sitemap. See src/lib/indexing.ts.
+    robots: robotsFor(isPostIndexable(post)),
     openGraph: {
       type: "article",
       title: `${post.seoTitle} — ${site.name}`,

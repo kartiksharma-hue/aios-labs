@@ -7,6 +7,7 @@ import {
   publishedCaseStudies,
 } from "@/content/work";
 import { services } from "@/content/services";
+import { isCaseStudyIndexable, robotsFor } from "@/lib/indexing";
 import { site } from "@/lib/site";
 
 export function generateStaticParams() {
@@ -28,11 +29,9 @@ export async function generateMetadata({
     description: study.summary,
     alternates: { canonical: url },
     // Placeholders carry no client information and nothing worth ranking, so
-    // they are kept out of the index until real content replaces them.
-    robots:
-      study.status === "placeholder"
-        ? { index: false, follow: true }
-        : { index: true, follow: true },
+    // they are kept out of the index until real content replaces them. The
+    // same rule decides sitemap inclusion — see src/lib/indexing.ts.
+    robots: robotsFor(isCaseStudyIndexable(study)),
     openGraph: {
       type: "article",
       title: `${title} — ${site.name}`,

@@ -13,6 +13,7 @@ import { TextReveal } from "@/components/motion/text-reveal";
 import { founder } from "@/content/founder";
 import { members, reservedPortrait, reservedSeats } from "@/content/team";
 import { site } from "@/lib/site";
+import { isTeamIndexable, robotsFor } from "@/lib/indexing";
 
 export const metadata: Metadata = {
   title: "Team",
@@ -20,8 +21,7 @@ export const metadata: Metadata = {
     "The people behind AIOS Labs. Profiles are published as they are confirmed, in each person's own words.",
   alternates: { canonical: "/team" },
   // Nothing verified to index yet; the directory is empty by design.
-  robots:
-    members.length > 0 ? { index: true, follow: true } : { index: false, follow: true },
+  robots: robotsFor(isTeamIndexable),
   openGraph: {
     type: "website",
     title: `Team — ${site.name}`,

@@ -8,6 +8,7 @@ import {
 } from "@/content/locations";
 import { services } from "@/content/services";
 import { site } from "@/lib/site";
+import { robotsFor } from "@/lib/indexing";
 
 export function generateStaticParams() {
   return publishedLocations.map((location) => ({ slug: location.slug }));
@@ -28,9 +29,7 @@ export async function generateMetadata({
     alternates: { canonical: url },
     // Indexed only once the page carries researched, market-specific content.
     // Four pages differing by a city name would be a doorway-page network.
-    robots: isIndexable(location)
-      ? { index: true, follow: true }
-      : { index: false, follow: true },
+    robots: robotsFor(isIndexable(location)),
     openGraph: {
       type: "website",
       title: `${location.metaTitle} — ${site.name}`,

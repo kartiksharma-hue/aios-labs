@@ -7,12 +7,16 @@ import { WorkCta } from "@/components/work/work-cta";
 import { publishedCaseStudies } from "@/content/work";
 import { services } from "@/content/services";
 import { site } from "@/lib/site";
+import { isWorkIndexIndexable, robotsFor } from "@/lib/indexing";
 
 export const metadata: Metadata = {
   title: "Selected Work",
   description:
     "Growth systems, campaigns and digital experiences from AIOS Labs — selected case studies covering search, paid acquisition and conversion.",
   alternates: { canonical: "/work" },
+  // A listing of nothing but reserved slots is a thin page. It becomes
+  // indexable the moment one real case study is published.
+  robots: robotsFor(isWorkIndexIndexable),
   openGraph: {
     type: "website",
     title: `Selected Work — ${site.name}`,

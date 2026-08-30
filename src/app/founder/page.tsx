@@ -11,6 +11,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { TextReveal } from "@/components/motion/text-reveal";
 import { founder } from "@/content/founder";
 import { site } from "@/lib/site";
+import { isFounderIndexable, robotsFor } from "@/lib/indexing";
 
 export const metadata: Metadata = {
   title: "Founder",
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
     "The founder of AIOS Labs — the thinking behind an agency built to run growth as one connected system. Profile in progress.",
   alternates: { canonical: "/founder" },
   // Nothing verified to index yet; the page is a structure awaiting content.
-  robots: founder.name ? { index: true, follow: true } : { index: false, follow: true },
+  robots: robotsFor(isFounderIndexable),
   openGraph: {
     type: "profile",
     title: `Founder — ${site.name}`,
