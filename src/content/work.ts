@@ -9,14 +9,16 @@ import type { CaseStudy } from "@/content/work-types";
  * not verified the record says what was executed and states plainly that the
  * measurable outcome is pending verified reporting.
  *
- * Three engagements carry a verified scope of work and are published as
- * `methodology` studies: they document what was done, not what it produced.
- * Two carry too little verified detail to publish and stay `placeholder` —
- * routed and listed, but out of the index and the sitemap until real content
- * exists. See `isCaseStudyIndexable` in src/lib/indexing.ts.
+ * Three engagements carry both a verified scope of work and verified Search
+ * Console reporting, and are `published`. Two carry too little verified detail
+ * to publish and stay `placeholder` — routed and listed, but out of the index
+ * and the sitemap. See `isCaseStudyIndexable` in src/lib/indexing.ts.
  *
- * To move a study from `methodology` to `published`: add verified `metrics`
- * (each with its `source`) and rewrite `outcome` against that reporting.
+ * Search Console figures exist for both placeholder engagements as well, and
+ * are deliberately not published. A click total beside "verified project
+ * detail pending" invites the reader to credit the number to work this site
+ * has not described. Supplying the scope of work is what unlocks them; the
+ * figures are held until then rather than published on their own.
  */
 
 /** No client screenshots or assets have been supplied. Every slot renders the
@@ -27,9 +29,22 @@ const pendingVisuals = [
   { label: "Supporting visual", ratio: "4 / 3", src: null, alt: null },
 ];
 
-/** Shared closing line for every study without verified reporting. */
-const pendingReporting =
-  "No performance figures are published here. Traffic, ranking and enquiry outcomes will be documented only once they are backed by verified reporting agreed with the client.";
+/**
+ * The one reporting window every published figure is drawn from. Google Search
+ * Console's default 90-day view, read from the property's Performance report.
+ */
+const searchConsoleSource =
+  "Google Search Console — total web search clicks, 90 days from 28 May 2026";
+
+/**
+ * Read this before adding any figure. What Search Console reports is the
+ * volume recorded in a window, not the change produced by anyone's work. With
+ * no published before-and-after baseline, a click total describes the channel's
+ * current scale and nothing more — so every study says exactly that rather than
+ * letting the number imply a gain we have not measured.
+ */
+const volumeNotAttribution =
+  "This figure is the volume recorded in that window, not an attributed gain. No before-and-after baseline is published here, so it describes the channel's current scale rather than a measure of change.";
 
 export const caseStudies: readonly CaseStudy[] = [
   {
@@ -38,10 +53,10 @@ export const caseStudies: readonly CaseStudy[] = [
     reference: "Case Study 01",
     category: "SEO / Organic Growth",
     client: "Per4mance Guru",
-    year: null,
+    year: "2026",
     summary:
       "Building a stronger organic growth foundation — off-page SEO run as a repeatable operation rather than a scatter of one-off links.",
-    status: "methodology",
+    status: "published",
     challenge: {
       heading: "The challenge",
       body: [
@@ -96,11 +111,17 @@ export const caseStudies: readonly CaseStudy[] = [
     ],
     services: ["seo"],
     outcome: [
-      "Organic growth infrastructure established and continuously optimized. Performance outcomes are intentionally omitted here until they are backed by verified reporting.",
+      "Organic growth infrastructure established and continuously optimized.",
       "What exists today is the operating system for the channel: a qualified opportunity pipeline, a repeatable execution cycle across profiles, directories, guest placements and supporting content, and tracking that makes each round of acquisition more informed than the one before it.",
-      pendingReporting,
+      `Search performance for the reporting window is published below, taken from Google Search Console. ${volumeNotAttribution}`,
     ],
-    metrics: [],
+    metrics: [
+      {
+        label: "Web search clicks",
+        value: "469",
+        source: searchConsoleSource,
+      },
+    ],
     gallery: pendingVisuals,
     featured: true,
     published: true,
@@ -111,10 +132,10 @@ export const caseStudies: readonly CaseStudy[] = [
     reference: "Case Study 02",
     category: "SEO / Organic Growth",
     client: "KR Mangalam Indirapuram",
-    year: null,
+    year: "2026",
     summary:
       "Building consistent off-page visibility for a local education brand, through a structured programme of authority-building activity.",
-    status: "methodology",
+    status: "published",
     challenge: {
       heading: "The challenge",
       body: [
@@ -164,9 +185,15 @@ export const caseStudies: readonly CaseStudy[] = [
     services: ["seo"],
     outcome: [
       "SEO execution and authority-building activity delivered as part of an ongoing organic growth program.",
-      pendingReporting,
+      `Search performance for the reporting window is published below, taken from Google Search Console. ${volumeNotAttribution}`,
     ],
-    metrics: [],
+    metrics: [
+      {
+        label: "Web search clicks",
+        value: "3,171",
+        source: searchConsoleSource,
+      },
+    ],
     gallery: pendingVisuals,
     featured: false,
     published: true,
@@ -177,10 +204,10 @@ export const caseStudies: readonly CaseStudy[] = [
     reference: "Case Study 03",
     category: "SEO / Organic Growth",
     client: "GD Goenka Global School",
-    year: null,
+    year: "2026",
     summary:
       "Building a stronger search foundation for an education brand — off-page authority supported by the content it points at.",
-    status: "methodology",
+    status: "published",
     challenge: {
       heading: "The challenge",
       body: [
@@ -230,9 +257,15 @@ export const caseStudies: readonly CaseStudy[] = [
     services: ["seo"],
     outcome: [
       "Organic visibility work executed through a structured off-page SEO process.",
-      pendingReporting,
+      `Search performance for the reporting window is published below, taken from Google Search Console. ${volumeNotAttribution}`,
     ],
-    metrics: [],
+    metrics: [
+      {
+        label: "Web search clicks",
+        value: "3,243",
+        source: searchConsoleSource,
+      },
+    ],
     gallery: pendingVisuals,
     featured: false,
     published: true,
