@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { cn } from "@/lib/cn";
-import { CaseVisualFrame } from "@/components/work/case-visual-frame";
+import { MediaFrame } from "@/components/ui/media-frame";
 import { Reveal } from "@/components/motion/reveal";
 import type { CaseStudy } from "@/content/work-types";
 import type { Service } from "@/content/services";
@@ -27,8 +27,8 @@ export function WorkCard({
         className="group flex flex-col gap-7"
         aria-label={`${study.title} — ${study.reference}`}
       >
-        <CaseVisualFrame
-          visual={study.gallery[0]}
+        <MediaFrame
+          slot={study.gallery[0]}
           ratio={featured ? "21 / 9" : undefined}
           sizes={
             featured

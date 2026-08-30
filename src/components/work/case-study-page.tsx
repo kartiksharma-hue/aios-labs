@@ -5,7 +5,7 @@ import { Eyebrow } from "@/components/ui/eyebrow";
 import { PlaceholderNote } from "@/components/ui/placeholder-note";
 import { Reveal } from "@/components/motion/reveal";
 import { TextReveal } from "@/components/motion/text-reveal";
-import { CaseVisualFrame } from "@/components/work/case-visual-frame";
+import { MediaFrame } from "@/components/ui/media-frame";
 import { WorkCta } from "@/components/work/work-cta";
 import type { CaseStudy, CaseStudySection } from "@/content/work-types";
 import type { Service } from "@/content/services";
@@ -303,8 +303,8 @@ export function CaseStudyPage({
 
             <div className="flex flex-col gap-6 md:gap-10">
               <Reveal>
-                <CaseVisualFrame
-                  visual={study.gallery[0]}
+                <MediaFrame
+                  slot={study.gallery[0]}
                   ratio="21 / 9"
                   sizes="(min-width: 1024px) 1280px, 100vw"
                 />
@@ -313,7 +313,7 @@ export function CaseStudyPage({
                 <div className="grid gap-6 md:grid-cols-2 md:gap-10">
                   {study.gallery.slice(1).map((visual) => (
                     <Reveal key={visual.label}>
-                      <CaseVisualFrame visual={visual} />
+                      <MediaFrame slot={visual} />
                     </Reveal>
                   ))}
                 </div>
