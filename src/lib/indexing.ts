@@ -5,6 +5,7 @@ import { posts } from "@/content/blog";
 import { isIndexable as isLocationIndexable, publishedLocations } from "@/content/locations";
 import { founder } from "@/content/founder";
 import { members } from "@/content/team";
+import { legalDocuments } from "@/content/legal";
 import type { CaseStudy } from "@/content/work-types";
 import type { BlogPost } from "@/content/blog-types";
 
@@ -60,6 +61,9 @@ export function indexableRoutes(): readonly string[] {
     "/about",
     "/locations",
     "/contact",
+    // Always present, so unconditionally indexable — unlike the content-driven
+    // routes below, there is no state in which these have nothing to show.
+    ...legalDocuments.map((doc) => `/${doc.slug}`),
   ];
 
   for (const service of servicePages) {
