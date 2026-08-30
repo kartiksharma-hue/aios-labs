@@ -56,20 +56,15 @@ export const founder: Founder = {
   role: "Founder, AIOS Labs",
 
   /**
-   * PENDING ASSET — the only outstanding item on this page.
-   *
-   * To publish the portrait:
-   *   1. Save the supplied photograph to `public/images/kartik-sharma.jpg`
-   *   2. Change `src` below to "/images/kartik-sharma.jpg"
-   *
-   * Nothing else needs to change. `MediaFrame` swaps the marked placeholder
-   * for the real asset at the same ratio, `alt` is already written, and the
-   * Open Graph card picks the portrait up automatically (see founder/page.tsx).
+   * The supplied photograph, 1086x1448 (3:4). `MediaFrame` covers the 4:5 slot,
+   * which trims about 3% from the top and bottom — verified to keep the full
+   * figure in frame. Next/Image serves a resized, modern-format version, so the
+   * source PNG's weight never reaches the browser.
    */
   portrait: {
     label: "Founder portrait",
     ratio: "4 / 5",
-    src: null,
+    src: "/images/001.png",
     alt: "Kartik Sharma, Founder of AIOS Labs",
   },
 
