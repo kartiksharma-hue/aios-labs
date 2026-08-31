@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { fontVariables } from "@/lib/fonts";
 import { site } from "@/lib/site";
 import { Navbar } from "@/components/layout/navbar";
@@ -39,6 +40,18 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${fontVariables} h-full antialiased`}>
       <head>
+        <Script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-ZJ2X3GQCP2"
+/>
+<Script id="google-analytics">
+  {`
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-ZJ2X3GQCP2');
+  `}
+</Script>
         {/*
           Runs before first paint. Marks the document as JS-capable so reveal
           animations can prime their hidden state without hiding content from
