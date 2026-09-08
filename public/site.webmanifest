@@ -1,0 +1,13 @@
+{
+  "name": "MADDEX Media — Performance Marketing & Creative Strategy",
+  "short_name": "MADDEX Media",
+  "description": "Noida-based performance marketing agency for D2C brands.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#070C18",
+  "theme_color": "#070C18",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}
