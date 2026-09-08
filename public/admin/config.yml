@@ -1,0 +1,40 @@
+backend:
+  name: github
+  repo: kartiksharma-hue/aios-labs
+  branch: claude/new-session-tcefud
+  base_url: https://REPLACE_WITH_YOUR_DOMAIN
+  auth_endpoint: /api/auth
+
+# Where images uploaded in the editor are stored, and how they are referenced.
+media_folder: "public/img/blog"
+public_folder: "/img/blog"
+
+publish_mode: simple
+
+collections:
+  - name: "blog"
+    label: "Blog Posts"
+    label_singular: "Blog Post"
+    folder: "content/blog"
+    create: true
+    slug: "{{slug}}"
+    summary: "{{title}}  ·  {{date}}"
+    sortable_fields: ["date", "title"]
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+      - { label: "Short excerpt", name: "excerpt", widget: "text" }
+      - { label: "Cover image", name: "cover", widget: "image", required: false, default: "/img/blog/placeholder-cover.svg" }
+      - { label: "Author", name: "author", widget: "string", default: "Kartik Sharma" }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - name: "contact"
+        label: "Contact details"
+        file: "content/settings/contact.json"
+        fields:
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Phone", name: "phone", widget: "string" }
+          - { label: "WhatsApp / Booking link", name: "booking", widget: "string", required: false }

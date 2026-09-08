@@ -36,6 +36,11 @@ const nextConfig: NextConfig = {
         { source: `${clean === "/" ? "" : clean}/`, destination: dest },
       ];
     });
+    // Serve the Decap CMS admin at /admin/.
+    rules.push(
+      { source: "/admin", destination: "/admin/index.html" },
+      { source: "/admin/", destination: "/admin/index.html" },
+    );
     return { beforeFiles: rules, afterFiles: [], fallback: [] };
   },
 };

@@ -1,0 +1,90 @@
+/* Blog styling — self-contained, matches the AIOS Labs (navy/cream/gold) look.
+   Fonts are the same self-hosted faces the static site uses (public/fonts). */
+
+@font-face { font-family: "Syne"; src: url("/fonts/syne-800-latin.woff2") format("woff2"); font-weight: 800; font-display: swap; }
+@font-face { font-family: "Syne"; src: url("/fonts/syne-700-latin.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Kanit"; src: url("/fonts/kanit-300-latin.woff2") format("woff2"); font-weight: 300; font-display: swap; }
+@font-face { font-family: "Kanit"; src: url("/fonts/kanit-400-latin.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Kanit"; src: url("/fonts/kanit-600-latin.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "BebasBlog"; src: url("/fonts/bebas-neue-400-latin.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+
+.aios-blog {
+  --navy: #070c18;
+  --navy2: #101d34;
+  --cream: #faf6ee;
+  --gold: #df9c2c;
+  --muted: rgba(250, 246, 238, 0.62);
+  background: var(--navy);
+  color: var(--cream);
+  font-family: "Kanit", system-ui, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.aios-blog a { color: inherit; text-decoration: none; }
+.aios-blog__wrap { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+/* header / footer */
+.aios-blog__bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 20px; border-bottom: 4px solid #000; background: var(--navy);
+}
+.aios-blog__logo { font-family: "Syne", sans-serif; font-weight: 800; font-size: 28px; letter-spacing: -0.5px; }
+.aios-blog__logo span { color: var(--gold); }
+.aios-blog__nav a { font-family: "Kanit"; font-weight: 600; font-size: 15px; color: var(--cream); opacity: .85; margin-left: 22px; }
+.aios-blog__nav a:hover { color: var(--gold); opacity: 1; }
+.aios-blog__foot {
+  margin-top: auto; border-top: 4px solid #000; padding: 28px 20px; color: var(--muted);
+  font-size: 13px; text-align: center;
+}
+
+/* index */
+.aios-blog__hero { padding: 56px 0 26px; }
+.aios-blog__kicker {
+  display: inline-block; font-family: "BebasBlog"; letter-spacing: 2px; font-size: 13px;
+  color: #000; background: var(--gold); border: 2px solid #000; padding: 4px 12px;
+  transform: rotate(-1.5deg); box-shadow: 3px 3px 0 #000;
+}
+.aios-blog__title {
+  font-family: "Syne", sans-serif; font-weight: 800; text-transform: uppercase;
+  line-height: 0.95; letter-spacing: -1px; font-size: clamp(34px, 6vw, 64px); margin: 18px 0 8px;
+}
+.aios-blog__sub { color: var(--muted); font-weight: 300; max-width: 620px; font-size: 17px; }
+
+.aios-blog__grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 26px; padding: 30px 0 70px;
+}
+.aios-blog__card {
+  background: var(--cream); color: #000; border: 2px solid #000; border-radius: 16px;
+  box-shadow: 5px 5px 0 #000; overflow: hidden; transition: transform .15s ease;
+  display: flex; flex-direction: column;
+}
+.aios-blog__card:hover { transform: translateY(-3px); }
+.aios-blog__card img { width: 100%; height: 180px; object-fit: cover; border-bottom: 2px solid #000; }
+.aios-blog__card-body { padding: 18px; display: flex; flex-direction: column; gap: 8px; }
+.aios-blog__card-date { font-family: "BebasBlog"; letter-spacing: 1.5px; font-size: 12px; color: #5a1a1a; }
+.aios-blog__card-title { font-family: "Syne", sans-serif; font-weight: 700; font-size: 21px; line-height: 1.15; color: #0a0a0c; }
+.aios-blog__card-ex { font-size: 14px; color: #333; }
+.aios-blog__card-more { margin-top: auto; font-weight: 600; color: #b9741a; padding-top: 6px; }
+
+/* post */
+.aios-blog__post { padding: 46px 0 70px; }
+.aios-blog__back { color: var(--gold); font-weight: 600; font-size: 14px; }
+.aios-blog__cover {
+  width: 100%; max-height: 420px; object-fit: cover; border: 2px solid #000;
+  border-radius: 16px; box-shadow: 6px 6px 0 #000; margin: 20px 0 28px;
+}
+.aios-blog__meta { color: var(--muted); font-size: 14px; margin-bottom: 4px; }
+.aios-blog__prose { max-width: 760px; font-size: 18px; line-height: 1.7; color: rgba(250,246,238,.9); }
+.aios-blog__prose h2 { font-family: "Syne", sans-serif; font-weight: 800; font-size: 30px; margin: 34px 0 12px; color: var(--cream); }
+.aios-blog__prose h3 { font-family: "Syne", sans-serif; font-weight: 700; font-size: 23px; margin: 26px 0 10px; color: var(--cream); }
+.aios-blog__prose p { margin: 0 0 18px; }
+.aios-blog__prose a { color: var(--gold); text-decoration: underline; }
+.aios-blog__prose ul, .aios-blog__prose ol { margin: 0 0 18px; padding-left: 22px; }
+.aios-blog__prose li { margin: 6px 0; }
+.aios-blog__prose blockquote {
+  border-left: 4px solid var(--gold); margin: 22px 0; padding: 6px 18px;
+  color: var(--cream); font-style: italic; background: rgba(255,255,255,.03);
+}
+.aios-blog__prose strong { color: var(--cream); }
